@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -65,8 +62,28 @@ public class StudentDao implements Dao {
 
     }
 
+    Student s= new Student();
     public List<Student> getStudentsSorted(String fieldName) {
 
+        if(Objects.equals(fieldName, s.getFirstName())) {
+            return getFirstNameSorted();
+        } else if (Objects.equals(fieldName, s.getLastName())){
+            return getLastNameSorted();
+        }
+
+        else return null;
+
+//        List<Student> list = getAll();
+//
+//        List<Student> sortedList = list.stream()
+//                .sorted(Comparator.comparing(Student::getFirstName))
+//                .collect(Collectors.toList());
+//
+//        return sortedList;
+
+    }
+
+    private List<Student> getFirstNameSorted (){
         List<Student> list = getAll();
 
         List<Student> sortedList = list.stream()
@@ -74,7 +91,15 @@ public class StudentDao implements Dao {
                 .collect(Collectors.toList());
 
         return sortedList;
+    }
 
+    private List<Student> getLastNameSorted(){
+        List<Student> list = getAll();
+        List<Student> sortedListLastName = list.stream()
+                .sorted(Comparator.comparing(Student::getLastName))
+                .collect(Collectors.toList());
+
+        return sortedListLastName;
     }
 
     private  List<Student> getAllName() {

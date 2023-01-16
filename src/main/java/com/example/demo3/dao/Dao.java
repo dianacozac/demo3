@@ -17,9 +17,9 @@ public interface Dao {
 
     /**
      *
-     * @param firstName to be used as sorted
+     * @param fieldName to be used as sorted
      * @return Student list sorted by first name
      */
-    public List<Student> getStudentsSorted (String firstName);
+    public List<Student> getStudentsSorted (String fieldName);
 
 }
