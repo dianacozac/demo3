@@ -65,13 +65,14 @@ public class StudentDao implements Dao {
     Student s= new Student();
     public List<Student> getStudentsSorted(String fieldName) {
 
-        if(Objects.equals(fieldName, s.getFirstName())) {
-            return getFirstNameSorted();
-        } else if (Objects.equals(fieldName, s.getLastName())){
-            return getLastNameSorted();
-        }
 
-        else return null;
+        if(Objects.equals(fieldName, "firstName")) {
+            return getFirstNameSorted();
+        } else if (!Objects.equals(fieldName, "lastName")) {
+            return null;
+        } else {
+        return getLastNameSorted();
+    }
 
 //        List<Student> list = getAll();
 //
