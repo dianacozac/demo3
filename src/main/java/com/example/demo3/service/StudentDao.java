@@ -62,25 +62,17 @@ public class StudentDao implements Dao {
 
     }
 
-    Student s= new Student();
     public List<Student> getStudentsSorted(String fieldName) {
 
 
         if(Objects.equals(fieldName, "firstName")) {
             return getFirstNameSorted();
-        } else if (!Objects.equals(fieldName, "lastName")) {
-            return null;
+        } else if (Objects.equals(fieldName, "lastName")) {
+            return getLastNameSorted();
         } else {
-        return getLastNameSorted();
-    }
+             throw new RuntimeException("Unknown field: " + fieldName);
 
-//        List<Student> list = getAll();
-//
-//        List<Student> sortedList = list.stream()
-//                .sorted(Comparator.comparing(Student::getFirstName))
-//                .collect(Collectors.toList());
-//
-//        return sortedList;
+        }
 
     }
 
