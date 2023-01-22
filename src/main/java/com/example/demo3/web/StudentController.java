@@ -40,4 +40,9 @@ public class StudentController {
     public List<Student> getStudentsSorted(@RequestParam(required = false) String fieldName){
         return studentDao.getStudentsSorted(fieldName);
     }
+
+//    @GetMapping
+//    public List<Student> getCompanyNameSorted(@RequestParam(required = false) String companyName){
+//        return studentDao.getCompanyNameSorted(companyName);
+//    }
 }

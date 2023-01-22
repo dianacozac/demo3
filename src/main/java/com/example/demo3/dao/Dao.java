@@ -22,4 +22,14 @@ public interface Dao {
      */
     public List<Student> getStudentsSorted (String fieldName);
 
+    /**
+     *
+     * @param companyName to be used by filter
+     * @return Student list filtered bt company name
+     */
+//    public List<Student> getCompanyNameFiltered(String companyName);
+//    public List<Student> getCompanyNameSorted(String companyName);
+
+
+
 }

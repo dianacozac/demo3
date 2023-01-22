@@ -69,10 +69,34 @@ public class StudentDao implements Dao {
             return getFirstNameSorted();
         } else if (Objects.equals(fieldName, "lastName")) {
             return getLastNameSorted();
-        } else {
+        } else { if(Objects.equals(fieldName, "compnyName")){
+            return getCompanyNameSorted();
+        }
              throw new RuntimeException("Unknown field: " + fieldName);
 
         }
+
+    }
+
+
+//    public List<Student> getCompanyNameFiltered(String companyName ){
+//        List<Student> list = getAll();
+//
+//        List<Student> filteredList = list.stream().filter(p -> p.getCompanyName().startsWith("B"))
+//                .collect(Collectors.toList());
+//
+//        return filteredList;
+//
+//    }
+
+    public List<Student> getCompanyNameSorted(){
+        List<Student> list = getAll();
+
+        List<Student> sortedListcompanyName = list.stream()
+                .sorted(Comparator.comparing(Student::getCompanyName))
+                .collect(Collectors.toList());
+
+        return sortedListcompanyName;
 
     }
 
