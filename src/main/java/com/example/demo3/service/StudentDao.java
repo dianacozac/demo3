@@ -69,7 +69,7 @@ public class StudentDao implements Dao {
             return getFirstNameSorted();
         } else if (Objects.equals(fieldName, "lastName")) {
             return getLastNameSorted();
-        } else { if(Objects.equals(fieldName, "compnyName")){
+        } else { if(Objects.equals(fieldName, "companyName")){
             return getCompanyNameSorted();
         }
              throw new RuntimeException("Unknown field: " + fieldName);
@@ -172,6 +172,7 @@ public class StudentDao implements Dao {
             Student student = new Student();
             student.setFirstName(splits[0].replace("\"", ""));
             student.setLastName(splits[1].replace("\"", ""));
+            student.setCompanyName(splits[2].replace("\"", ""));
 
             return student;
 
