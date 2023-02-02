@@ -49,16 +49,20 @@ public class StudentDao implements Dao {
     }
 
     @Override
-    public List<Student> getStudentsFiltered(String firstNamePrefix, String lastNamePrefix) {
+    public List<Student> getStudentsFiltered(String firstNamePrefix, String lastNamePrefix, String companyNamePrefix) {
 
-        if (firstNamePrefix == null && lastNamePrefix == null){
+        if (firstNamePrefix == null && lastNamePrefix == null && companyNamePrefix == null) {
             return getAllName();
-        } else if (firstNamePrefix != null && lastNamePrefix == null){
+        } else if (firstNamePrefix != null && lastNamePrefix == null && companyNamePrefix == null) {
             return getFirstName(firstNamePrefix);
-        } else if (firstNamePrefix == null && lastNamePrefix != null) {
+        } else if (firstNamePrefix == null && lastNamePrefix != null && companyNamePrefix == null) {
 
             return getLastName(lastNamePrefix);
-        } else return getLastAndFirstName(firstNamePrefix,lastNamePrefix);
+        } else if (firstNamePrefix == null && lastNamePrefix == null && companyNamePrefix != null) {
+
+            return getCompanyName(companyNamePrefix);
+        }
+          else  return getLastAndFirstName(firstNamePrefix,lastNamePrefix, companyNamePrefix);
 
     }
 
@@ -92,11 +96,11 @@ public class StudentDao implements Dao {
     public List<Student> getCompanyNameSorted(){
         List<Student> list = getAll();
 
-        List<Student> sortedListcompanyName = list.stream()
+        List<Student> sortedListCompanyName = list.stream()
                 .sorted(Comparator.comparing(Student::getCompanyName))
                 .collect(Collectors.toList());
 
-        return sortedListcompanyName;
+        return sortedListCompanyName;
 
     }
 
@@ -147,12 +151,21 @@ public class StudentDao implements Dao {
 
     }
 
-    private List<Student> getLastAndFirstName(String firstNamePrefix, String lastNamePrefix ) {
+    private List<Student> getCompanyName(String companyNamePrefix){
+        List<Student> list = getAll();
+
+        List<Student> filteredList = list.stream().filter(p -> p.getCompanyName().startsWith(companyNamePrefix))
+                .collect(Collectors.toList());
+        return filteredList;
+
+    }
+
+    private List<Student> getLastAndFirstName(String firstNamePrefix, String lastNamePrefix, String companyNamePrefix ) {
 
             List<Student> list = getAll();
 
             List<Student> filteredList = list.stream().filter(p -> p.getFirstName().startsWith(firstNamePrefix)
-                            && p.getLastName().startsWith(lastNamePrefix))
+                            && p.getLastName().startsWith(lastNamePrefix) && p.getCompanyName().startsWith(companyNamePrefix))
                     .collect(Collectors.toList());
             return filteredList;
 

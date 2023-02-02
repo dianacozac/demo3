@@ -26,8 +26,9 @@ public class StudentController {
 
     @GetMapping
     public List<Student> getByName(@RequestParam(required = false) String firstName,
-                                   @RequestParam(required = false) String lastName){
-        return studentDao.getStudentsFiltered(firstName, lastName);
+                                   @RequestParam(required = false) String lastName,
+                                   @RequestParam(required = false) String companyName){
+        return studentDao.getStudentsFiltered(firstName, lastName, companyName);
     }
 
 //    @GetMapping("/sort")
@@ -44,5 +45,10 @@ public class StudentController {
 //    @GetMapping
 //    public List<Student> getCompanyNameSorted(@RequestParam(required = false) String companyName){
 //        return studentDao.getCompanyNameSorted(companyName);
+//    }
+
+//    @GetMapping("/filter")
+//    public List<Student> getCompanyNameFiltered(@RequestParam(required = false) String companyName) {
+//        return studentDao.getCompanyNameFiltered(companyName);
 //    }
 }
