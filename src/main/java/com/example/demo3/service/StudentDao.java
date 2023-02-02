@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -52,21 +49,62 @@ public class StudentDao implements Dao {
     }
 
     @Override
-    public List<Student> getStudentsFiltered(String firstNamePrefix, String lastNamePrefix) {
+    public List<Student> getStudentsFiltered(String firstNamePrefix, String lastNamePrefix, String companyNamePrefix) {
 
-        if (firstNamePrefix == null && lastNamePrefix == null){
+        if (firstNamePrefix == null && lastNamePrefix == null && companyNamePrefix == null) {
             return getAllName();
-        } else if (firstNamePrefix != null && lastNamePrefix == null){
+        } else if (firstNamePrefix != null && lastNamePrefix == null && companyNamePrefix == null) {
             return getFirstName(firstNamePrefix);
-        } else if (firstNamePrefix == null && lastNamePrefix != null) {
+        } else if (firstNamePrefix == null && lastNamePrefix != null && companyNamePrefix == null) {
 
             return getLastName(lastNamePrefix);
-        } else return getLastAndFirstName(firstNamePrefix,lastNamePrefix);
+        } else if (firstNamePrefix == null && lastNamePrefix == null && companyNamePrefix != null) {
+
+            return getCompanyName(companyNamePrefix);
+        }
+          else  return getLastAndFirstName(firstNamePrefix,lastNamePrefix, companyNamePrefix);
 
     }
 
     public List<Student> getStudentsSorted(String fieldName) {
 
+
+        if(Objects.equals(fieldName, "firstName")) {
+            return getFirstNameSorted();
+        } else if (Objects.equals(fieldName, "lastName")) {
+            return getLastNameSorted();
+        } else { if(Objects.equals(fieldName, "companyName")){
+            return getCompanyNameSorted();
+        }
+             throw new RuntimeException("Unknown field: " + fieldName);
+
+        }
+
+    }
+
+
+//    public List<Student> getCompanyNameFiltered(String companyName ){
+//        List<Student> list = getAll();
+//
+//        List<Student> filteredList = list.stream().filter(p -> p.getCompanyName().startsWith("B"))
+//                .collect(Collectors.toList());
+//
+//        return filteredList;
+//
+//    }
+
+    public List<Student> getCompanyNameSorted(){
+        List<Student> list = getAll();
+
+        List<Student> sortedListCompanyName = list.stream()
+                .sorted(Comparator.comparing(Student::getCompanyName))
+                .collect(Collectors.toList());
+
+        return sortedListCompanyName;
+
+    }
+
+    private List<Student> getFirstNameSorted (){
         List<Student> list = getAll();
 
         List<Student> sortedList = list.stream()
@@ -74,7 +112,15 @@ public class StudentDao implements Dao {
                 .collect(Collectors.toList());
 
         return sortedList;
+    }
 
+    private List<Student> getLastNameSorted(){
+        List<Student> list = getAll();
+        List<Student> sortedListLastName = list.stream()
+                .sorted(Comparator.comparing(Student::getLastName))
+                .collect(Collectors.toList());
+
+        return sortedListLastName;
     }
 
     private  List<Student> getAllName() {
@@ -105,12 +151,21 @@ public class StudentDao implements Dao {
 
     }
 
-    private List<Student> getLastAndFirstName(String firstNamePrefix, String lastNamePrefix ) {
+    private List<Student> getCompanyName(String companyNamePrefix){
+        List<Student> list = getAll();
+
+        List<Student> filteredList = list.stream().filter(p -> p.getCompanyName().startsWith(companyNamePrefix))
+                .collect(Collectors.toList());
+        return filteredList;
+
+    }
+
+    private List<Student> getLastAndFirstName(String firstNamePrefix, String lastNamePrefix, String companyNamePrefix ) {
 
             List<Student> list = getAll();
 
             List<Student> filteredList = list.stream().filter(p -> p.getFirstName().startsWith(firstNamePrefix)
-                            && p.getLastName().startsWith(lastNamePrefix))
+                            && p.getLastName().startsWith(lastNamePrefix) && p.getCompanyName().startsWith(companyNamePrefix))
                     .collect(Collectors.toList());
             return filteredList;
 
@@ -130,6 +185,7 @@ public class StudentDao implements Dao {
             Student student = new Student();
             student.setFirstName(splits[0].replace("\"", ""));
             student.setLastName(splits[1].replace("\"", ""));
+            student.setCompanyName(splits[2].replace("\"", ""));
 
             return student;
 

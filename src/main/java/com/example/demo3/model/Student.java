@@ -7,6 +7,8 @@ public class Student {
     private String companyName;
     private String address;
 
+
+
     public String getFirstName() {
         return firstName;
     }

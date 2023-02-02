@@ -26,13 +26,29 @@ public class StudentController {
 
     @GetMapping
     public List<Student> getByName(@RequestParam(required = false) String firstName,
-                                   @RequestParam(required = false) String lastName){
-        return studentDao.getStudentsFiltered(firstName, lastName);
+                                   @RequestParam(required = false) String lastName,
+                                   @RequestParam(required = false) String companyName){
+        return studentDao.getStudentsFiltered(firstName, lastName, companyName);
     }
+
+//    @GetMapping("/sort")
+//    public List<Student> getSortedStudents(@RequestParam(required = false) String firstName){
+//        return studentDao.getStudentsSorted(firstName);
+//
+//    }
 
     @GetMapping("/sort")
-    public List<Student> getSortedStudents(@RequestParam(required = false) String firstName){
-        return studentDao.getStudentsSorted(firstName);
-
+    public List<Student> getStudentsSorted(@RequestParam(required = false) String fieldName){
+        return studentDao.getStudentsSorted(fieldName);
     }
+
+//    @GetMapping
+//    public List<Student> getCompanyNameSorted(@RequestParam(required = false) String companyName){
+//        return studentDao.getCompanyNameSorted(companyName);
+//    }
+
+//    @GetMapping("/filter")
+//    public List<Student> getCompanyNameFiltered(@RequestParam(required = false) String companyName) {
+//        return studentDao.getCompanyNameFiltered(companyName);
+//    }
 }

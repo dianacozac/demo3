@@ -13,13 +13,23 @@ public interface Dao {
      * @param firstNamePrefix and lastNamePrefix  to be used as filtered
      * @return Student list filtered by name
      */
-    public  List<Student> getStudentsFiltered (String firstNamePrefix, String lastNamePrefix);
+    public  List<Student> getStudentsFiltered (String firstNamePrefix, String lastNamePrefix, String companyNamePrefix);
 
     /**
      *
-     * @param firstName to be used as sorted
+     * @param fieldName to be used as sorted
      * @return Student list sorted by first name
      */
-    public List<Student> getStudentsSorted (String firstName);
+    public List<Student> getStudentsSorted (String fieldName);
+
+    /**
+     *
+     * @param companyName to be used by filter
+     * @return Student list filtered bt company name
+     */
+//    public List<Student> getCompanyNameFiltered(String companyName);
+////    public List<Student> getCompanyNameSorted(String companyName);
+
+
 
 }
