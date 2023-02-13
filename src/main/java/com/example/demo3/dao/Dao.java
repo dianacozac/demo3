@@ -10,8 +10,8 @@ public interface Dao {
 
     /**
      *
-     * @param firstNamePrefix and lastNamePrefix  to be used as filtered
-     * @return Student list filtered by name
+     * @param firstNamePrefix, lastNamePrefix and companyNamePrefix to be used as filtered
+     * @return Student list filtered by name and company name
      */
     public  List<Student> getStudentsFiltered (String firstNamePrefix, String lastNamePrefix, String companyNamePrefix);
 
